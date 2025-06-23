@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لوحة تحكم الزيارات</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f7f7f7;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .counter-box {
+      font-size: 20px;
+      background: #fff;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: fit-content;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      background-color: #007bff;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #resetSocial { background-color: #dc3545; }
+    #resetSocial:hover { background-color: #b52a38; }
+  </style>
+</head>
+<body>
+
+  <h1>لوحة التحكم</h1>
+
+  <div class="counter-box" id="visitorBox">عدد زيارات الصفحة الرئيسية: جاري التحميل...</div>
+
+  <div class="counter-box" id="whatsappCount">واتساب: جاري التحميل...</div>
+  <div class="counter-box" id="instagramCount">إنستجرام: جاري التحميل...</div>
+  <div class="counter-box" id="snapchatCount">سناب شات: جاري التحميل...</div>
+  <div class="counter-box" id="tiktokCount">تيك توك: جاري التحميل...</div>
+
+  <button id="resetVisitors">إعادة تعيين عداد الزوار</button>
+  <button id="resetSocial">إعادة عدادات السوشيال</button>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // إعدادات Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAci1p0uVxkZI8K3UIxsmRXDXIRsdXNct8",
+      authDomain: "visitor-counter-5c400.firebaseapp.com",
+      databaseURL: "https://visitor-counter-5c400-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "visitor-counter-5c400",
+      storageBucket: "visitor-counter-5c400.firebasestorage.app",
+      messagingSenderId: "884458096546",
+      appId: "1:884458096546:web:3f5444a1753898aab954fb",
+      measurementId: "G-E0CBN6EHSG"
+    };
+
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // قراءة عدد الزوار
+    const visitorRef = db.ref('visitorCount');
+    visitorRef.on('value', snapshot => {
+      const count = snapshot.val() || 0;
+      document.getElementById('visitorBox').innerText = 'عدد زيارات الصفحة الرئيسية: ' + count;
+    });
+
+    // قراءة ضغطات السوشيال
+    const platforms = ['whatsapp', 'instagram', 'snapchat', 'tiktok'];
+    platforms.forEach(platform => {
+      db.ref('clicks/' + platform).on('value', snapshot => {
+        const count = snapshot.val() || 0;
+        document.getElementById(platform + 'Count').innerText = `${platform === 'whatsapp' ? 'واتساب' : platform === 'instagram' ? 'إنستجرام' : platform === 'snapchat' ? 'سناب شات' : 'تيك توك'}: ${count} ضغطة`;
+      });
+    });
+
+    // إعادة تعيين الزوار
+    document.getElementById('resetVisitors').addEventListener('click', () => {
+      if (confirm("هل تريد إعادة تعيين عدد الزوار؟")) {
+        visitorRef.set(0);
+      }
+    });
+
+    // إعادة تعيين السوشيال
+    document.getElementById('resetSocial').addEventListener('click', () => {
+      if (confirm("هل تريد إعادة عدادات السوشيال كلها؟")) {
+        platforms.forEach(p => db.ref('clicks/' + p).set(0));
+      }
+    });
+  </script>
+</body>
+</html>
