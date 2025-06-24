@@ -27,22 +27,8 @@ document.querySelectorAll(".faq-question").forEach(button => {
   });
 });
 
-// -----------------------------
-// Popup ترحيبي
-// -----------------------------
-window.addEventListener('DOMContentLoaded', () => {
-  const popup = document.getElementById('welcome-popup');
-  const closeBtn = document.getElementById('close-popup');
 
-  if (popup && closeBtn && !localStorage.getItem('welcomeShown')) {
-    popup.classList.remove('hidden');
 
-    closeBtn.addEventListener('click', () => {
-      popup.classList.add('hidden');
-      localStorage.setItem('welcomeShown', 'true');
-    });
-  }
-});
 
 // -----------------------------
 // زر "رجوع إلى الأعلى"
