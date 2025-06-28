@@ -7,110 +7,591 @@
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f7f7f7;
+      background: #f5f6fa;
       padding: 20px;
+      margin: 0;
       text-align: center;
-    }
-
-    h1 {
       color: #333;
-      margin-bottom: 20px;
     }
-
-    .counter-box {
-      font-size: 20px;
-      background: #fff;
-      padding: 15px;
-      margin: 10px auto;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: fit-content;
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #5b0fca;
+      user-select: none;
     }
-
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
+    .counter-container {
+      max-width: 600px;
+      margin: 15px auto;
+      border-radius: 12px;
+      padding: 20px;
       color: white;
-      background-color: #007bff;
-      transition: background 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+      user-select: none;
+      transition: box-shadow 0.3s ease;
+    }
+    .counter-container:hover {
+      box-shadow: 0 6px 25px rgba(0,0,0,0.18);
+    }
+    #visitorCounter { background: linear-gradient(135deg, #5b0fca, #2a72ff); }
+    #whatsappCounter { background: linear-gradient(135deg, #25d366, #128c4a); }
+    #instagramCounter { background: linear-gradient(135deg, #f09433, #dc2743, #cc2366); }
+    #snapchatCounter { background: linear-gradient(135deg, #fcdc00, #c6b900); color: #222; }
+    #tiktokCounter { background: linear-gradient(135deg, #69c9d0, #00f2ea); }
+    .counter-label {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
+    .counter-value {
+      font-size: 2.4em;
+      margin-bottom: 5px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px rgba(0,0,0,0.25);
+    }
+    .last-updated {
+      font-size: 0.85em;
+      font-style: italic;
+      opacity: 0.75;
+      margin-bottom: 15px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .btn-group button {
+      padding: 12px 26px;
+      font-size: 20px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    }
+    .btn-group button:hover {
+      filter: brightness(1.15);
+      transform: scale(1.12);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.22);
+    }
+    .increase { background: rgba(255, 255, 255, 0.22); }
+    .increase:hover { background: rgba(255, 255, 255, 0.4); }
+    .decrease { background: rgba(0, 0, 0, 0.22); }
+    .decrease:hover { background: rgba(0, 0, 0, 0.4); }
+
+    .reset-buttons {
+      max-width: 600px;
+      margin: 40px auto 0;
+      user-select: none;
+    }
+    .reset-buttons button {
+      padding: 12px 28px;
+      margin: 8px;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 3px 9px rgba(0,0,0,0.25);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    #resetVisitors { background: #007bff; }
+    #resetVisitors:hover { background: #0056b3; transform: scale(1.07); }
+    #resetSocial { background: #28a745; }
+    #resetSocial:hover { background: #1e7e34; transform: scale(1.07); }
+
+    #downloadExcelBtn {
+      background: #ff8c00;
+      margin: 30px auto;
+      display: block;
+      padding: 14px 30px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 140, 0, 0.6);
+      color: white;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #downloadExcelBtn:hover {
+      background: #e07b00;
     }
 
-    button:hover {
-      background-color: #0056b3;
+    #socialCountersWrapper {
+      max-width: 600px;
+      margin: 0 auto 40px;
     }
 
-    #resetSocial { background-color: #dc3545; }
-    #resetSocial:hover { background-color: #b52a38; }
+    #chartControls {
+      max-width: 600px;
+      margin: 10px auto 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: #555;
+      font-weight: 700;
+      user-select: none;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    #timeRangeSelect {
+      padding: 8px 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1.5px solid #ccc;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+    #timeRangeSelect:hover, #timeRangeSelect:focus {
+      border-color: #5b0fca;
+      outline: none;
+    }
+
+    #chartContainer {
+      max-width: 700px;
+      margin: 0 auto 60px;
+      background: #fff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      height: 380px;
+      user-select: none;
+    }
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
   </style>
+
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
 </head>
 <body>
 
-  <h1>لوحة التحكم</h1>
+<h1>لوحة تحكم الزيارات</h1>
 
-  <div class="counter-box" id="visitorBox">عدد زيارات الصفحة الرئيسية: جاري التحميل...</div>
+<div class="counter-container" id="visitorCounter">
+  <div class="counter-label">عدد زيارات الصفحة الرئيسية</div>
+  <div class="counter-value" id="visitorBox">جاري التحميل...</div>
+  <div class="last-updated" id="lastUpdated_visitor">... جاري التحميل</div>
+  <div class="btn-group">
+    <button class="decrease" data-counter="visitor">−</button>
+    <button class="increase" data-counter="visitor">+</button>
+  </div>
+</div>
 
-  <div class="counter-box" id="whatsappCount">واتساب: جاري التحميل...</div>
-  <div class="counter-box" id="instagramCount">إنستجرام: جاري التحميل...</div>
-  <div class="counter-box" id="snapchatCount">سناب شات: جاري التحميل...</div>
-  <div class="counter-box" id="tiktokCount">تيك توك: جاري التحميل...</div>
+<div id="socialCountersWrapper">
 
+  <div class="counter-container" id="whatsappCounter">
+    <div class="counter-label">واتساب</div>
+    <div class="counter-value" id="whatsappCount">جاري التحميل...</div>
+    <div class="last-updated" id="lastUpdated_whatsapp">... جاري التحميل</div>
+    <div class="btn-group">
+      <button class="decrease" data-counter="whatsapp">−</button>
+      <button class="increase" data-counter="whatsapp">+</button>
+    </div>
+  </div>
+
+  <div class="counter-container" id="instagramCounter">
+    <div class="counter-label">إنستجرام</div>
+    <div class="counter-value" id="instagramCount">جاري التحميل...</div>
+    <div class="last-updated" id="lastUpdated_instagram">... جاري التحميل</div>
+    <div class="btn-group">
+      <button class="decrease" data-counter="instagram">−</button>
+      <button class="increase" data-counter="instagram">+</button>
+    </div>
+  </div>
+
+  <div class="counter-container" id="snapchatCounter">
+    <div class="counter-label">سناب شات</div>
+    <div class="counter-value" id="snapchatCount">جاري التحميل...</div>
+    <div class="last-updated" id="lastUpdated_snapchat">... جاري التحميل</div>
+    <div class="btn-group">
+      <button class="decrease" data-counter="snapchat">−</button>
+      <button class="increase" data-counter="snapchat">+</button>
+    </div>
+  </div>
+
+  <div class="counter-container" id="tiktokCounter">
+    <div class="counter-label">تيك توك</div>
+    <div class="counter-value" id="tiktokCount">جاري التحميل...</div>
+    <div class="last-updated" id="lastUpdated_tiktok">... جاري التحميل</div>
+    <div class="btn-group">
+      <button class="decrease" data-counter="tiktok">−</button>
+      <button class="increase" data-counter="tiktok">+</button>
+    </div>
+  </div>
+
+  <div id="chartControls">
+    <label for="timeRangeSelect">عرض البيانات:</label>
+    <select id="timeRangeSelect" aria-label="اختيار فترة عرض المخطط">
+      <option value="7">آخر 7 أيام</option>
+      <option value="15">آخر 15 يوم</option>
+      <option value="30" selected>آخر 30 يوم</option>
+    </select>
+  </div>
+
+  <div id="chartContainer">
+    <canvas id="historyChart"></canvas>
+  </div>
+
+</div>
+
+<button id="downloadExcelBtn" title="تحميل بيانات العدادات Excel">⬇ تحميل بيانات Excel</button>
+
+<div class="reset-buttons">
   <button id="resetVisitors">إعادة تعيين عداد الزوار</button>
   <button id="resetSocial">إعادة عدادات السوشيال</button>
+</div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAci1p0uVxkZI8K3UIxsmRXDXIRsdXNct8",
+    authDomain: "visitor-counter-5c400.firebaseapp.com",
+    databaseURL: "https://visitor-counter-5c400-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "visitor-counter-5c400",
+    storageBucket: "visitor-counter-5c400.appspot.com",
+    messagingSenderId: "884458096546",
+    appId: "1:884458096546:web:3f5444a1753898aab954fb"
+  };
 
-  <script>
-    // إعدادات Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAci1p0uVxkZI8K3UIxsmRXDXIRsdXNct8",
-      authDomain: "visitor-counter-5c400.firebaseapp.com",
-      databaseURL: "https://visitor-counter-5c400-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "visitor-counter-5c400",
-      storageBucket: "visitor-counter-5c400.firebasestorage.app",
-      messagingSenderId: "884458096546",
-      appId: "1:884458096546:web:3f5444a1753898aab954fb",
-      measurementId: "G-E0CBN6EHSG"
-    };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const counters = ['visitor', 'whatsapp', 'instagram', 'snapchat', 'tiktok'];
 
-    // تهيئة Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    // قراءة عدد الزوار
-    const visitorRef = db.ref('visitorCount');
-    visitorRef.on('value', snapshot => {
-      const count = snapshot.val() || 0;
-      document.getElementById('visitorBox').innerText = 'عدد زيارات الصفحة الرئيسية: ' + count;
+  function formatDateTime(timestamp) {
+    if (!timestamp) return 'لم يتم التحديث بعد';
+    const d = new Date(timestamp);
+    return d.toLocaleString('ar-EG', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
+  }
 
-    // قراءة ضغطات السوشيال
-    const platforms = ['whatsapp', 'instagram', 'snapchat', 'tiktok'];
-    platforms.forEach(platform => {
-      db.ref('clicks/' + platform).on('value', snapshot => {
-        const count = snapshot.val() || 0;
-        document.getElementById(platform + 'Count').innerText = `${platform === 'whatsapp' ? 'واتساب' : platform === 'instagram' ? 'إنستجرام' : platform === 'snapchat' ? 'سناب شات' : 'تيك توك'}: ${count} ضغطة`;
+  function loadCounters() {
+    db.ref().once('value').then(snapshot => {
+      const data = snapshot.val() || {};
+
+      counters.forEach(counter => {
+        const value = counter === 'visitor' ? data.visitorCount || 0 : data.clicks?.[counter] || 0;
+        const lastUpdated = data.lastUpdated?.[counter] || null;
+
+        const visitorElem = document.getElementById(counter + 'Box') || document.getElementById(counter + 'Count');
+        if(visitorElem) visitorElem.innerText = value;
+
+        const lastUpdatedElem = document.getElementById('lastUpdated_' + counter);
+        if(lastUpdatedElem) lastUpdatedElem.innerText = 'آخر تحديث: ' + formatDateTime(lastUpdated);
       });
     });
+  }
 
-    // إعادة تعيين الزوار
-    document.getElementById('resetVisitors').addEventListener('click', () => {
-      if (confirm("هل تريد إعادة تعيين عدد الزوار؟")) {
-        visitorRef.set(0);
-      }
-    });
+  let dailyData = {}; // هيشمل كل البيانات اليومية لكل العدادات
 
-    // إعادة تعيين السوشيال
-    document.getElementById('resetSocial').addEventListener('click', () => {
-      if (confirm("هل تريد إعادة عدادات السوشيال كلها؟")) {
-        platforms.forEach(p => db.ref('clicks/' + p).set(0));
-      }
+  function loadChart(days = 30) {
+    db.ref('dailyVisitors').once('value').then(snapshotVisitors => {
+      dailyData.visitor = snapshotVisitors.val() || {};
+
+      db.ref('dailyClicks').once('value').then(snapshotClicks => {
+        dailyData.clicks = snapshotClicks.val() || {};
+
+        // جمع كل التواريخ من الزوار والسوشيال
+        const datesSet = new Set([
+          ...Object.keys(dailyData.visitor),
+          ...Object.keys(dailyData.clicks.whatsapp || {}),
+          ...Object.keys(dailyData.clicks.instagram || {}),
+          ...Object.keys(dailyData.clicks.snapchat || {}),
+          ...Object.keys(dailyData.clicks.tiktok || {})
+        ]);
+        const allDates = Array.from(datesSet).sort();
+        const selectedDates = allDates.slice(-days);
+
+        // جهز بيانات كل خط
+        const visitorVals = selectedDates.map(date => dailyData.visitor[date] || 0);
+        const whatsappVals = selectedDates.map(date => (dailyData.clicks.whatsapp || {})[date] || 0);
+        const instagramVals = selectedDates.map(date => (dailyData.clicks.instagram || {})[date] || 0);
+        const snapchatVals = selectedDates.map(date => (dailyData.clicks.snapchat || {})[date] || 0);
+        const tiktokVals = selectedDates.map(date => (dailyData.clicks.tiktok || {})[date] || 0);
+
+        // ألوان مميزة لكل خط
+        const colors = {
+          visitor: '#5b0fca',
+          whatsapp: '#25d366',
+          instagram: '#cc2366',
+          snapchat: '#c6b900',
+          tiktok: '#00f2ea'
+        };
+
+        if(window.historyChartInstance) {
+          window.historyChartInstance.data.labels = selectedDates;
+          window.historyChartInstance.data.datasets = [
+            {
+              label: ' الزوار',
+              data: visitorVals,
+              borderColor: colors.visitor,
+              backgroundColor: 'rgba(91, 15, 202, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: ' واتساب',
+              data: whatsappVals,
+              borderColor: colors.whatsapp,
+              backgroundColor: 'rgba(37, 211, 102, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: ' إنستجرام',
+              data: instagramVals,
+              borderColor: colors.instagram,
+              backgroundColor: 'rgba(204, 35, 102, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: ' سناب شات',
+              data: snapchatVals,
+              borderColor: colors.snapchat,
+              backgroundColor: 'rgba(198, 185, 0, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+            {
+              label: 'تيك توك',
+              data: tiktokVals,
+              borderColor: colors.tiktok,
+              backgroundColor: 'rgba(0, 242, 234, 0.15)',
+              fill: true,
+              tension: 0.3
+            },
+          ];
+
+          window.historyChartInstance.update();
+        } else {
+          window.historyChartInstance = new Chart(document.getElementById('historyChart').getContext('2d'), {
+            type: 'line',
+            data: {
+              labels: selectedDates,
+              datasets: [
+                {
+                  label: 'الزوار',
+                  data: visitorVals,
+                  borderColor: colors.visitor,
+                  backgroundColor: 'rgba(91, 15, 202, 0.15)',
+                  fill: true,
+                  tension: 0.3
+                },
+                {
+                  label: 'واتساب',
+                  data: whatsappVals,
+                  borderColor: colors.whatsapp,
+                  backgroundColor: 'rgba(37, 211, 102, 0.15)',
+                  fill: true,
+                  tension: 0.3
+                },
+                {
+                  label: 'إنستجرام',
+                  data: instagramVals,
+                  borderColor: colors.instagram,
+                  backgroundColor: 'rgba(204, 35, 102, 0.15)',
+                  fill: true,
+                  tension: 0.3
+                },
+                {
+                  label: 'سناب شات',
+                  data: snapchatVals,
+                  borderColor: colors.snapchat,
+                  backgroundColor: 'rgba(198, 185, 0, 0.15)',
+                  fill: true,
+                  tension: 0.3
+                },
+                {
+                  label: 'تيك توك',
+                  data: tiktokVals,
+                  borderColor: colors.tiktok,
+                  backgroundColor: 'rgba(0, 242, 234, 0.15)',
+                  fill: true,
+                  tension: 0.3
+                },
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    font: { size: 14, weight: 'bold' },
+                    usePointStyle: true,
+                    pointStyleWidth: 16,
+                    padding: 20,
+                  }
+                },
+                title: {
+                  display: true,
+                  text: '📊 إحصائيات الزيارات اليومية لكل منصة',
+                  font: { size: 20, weight: 'bold' },
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { stepSize: 1 },
+                }
+              }
+            }
+          });
+        }
+      });
     });
-  </script>
+  }
+
+  // إضافة التفاعل للأزرار + و -
+  document.querySelectorAll('.increase, .decrease').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const counter = btn.dataset.counter;
+      const ref = counter === 'visitor' ? db.ref('visitorCount') : db.ref('clicks/' + counter);
+      ref.once('value').then(snapshot => {
+        let val = snapshot.val() || 0;
+        if (btn.classList.contains('increase')) val++;
+        else if (val > 0) val--;
+
+        const updates = {};
+        updates[counter === 'visitor' ? 'visitorCount' : 'clicks/' + counter] = val;
+        updates['lastUpdated/' + counter] = Date.now();
+
+        // تحديث عداد اليوم فقط للزوار عند زيادة الزوار
+        if(counter === 'visitor' && btn.classList.contains('increase')) {
+          const today = new Date();
+          const dateKey = today.toISOString().split('T')[0];
+          const dailyRef = db.ref('dailyVisitors/' + dateKey);
+          dailyRef.once('value').then(dSnap => {
+            const dailyVal = dSnap.val() || 0;
+            dailyRef.set(dailyVal + 1);
+          });
+        }
+
+        // تحديث عداد اليوم للسوشيال عند زيادة أو نقصان
+        if(counter !== 'visitor') {
+          const today = new Date();
+          const dateKey = today.toISOString().split('T')[0];
+          const dailyClicksRef = db.ref('dailyClicks/' + counter + '/' + dateKey);
+          dailyClicksRef.once('value').then(dSnap => {
+            let dailyVal = dSnap.val() || 0;
+            dailyVal = btn.classList.contains('increase') ? dailyVal + 1 : Math.max(0, dailyVal - 1);
+            dailyClicksRef.set(dailyVal);
+          });
+        }
+
+        db.ref().update(updates).then(() => {
+          loadCounters();
+          loadChart(parseInt(document.getElementById('timeRangeSelect').value, 10));
+        });
+      });
+    });
+  });
+
+  document.getElementById('resetVisitors').addEventListener('click', () => {
+    if (confirm('هل تريد إعادة تعيين عدد الزوار؟')) {
+      const updates = {
+        visitorCount: 0,
+        'lastUpdated/visitor': Date.now(),
+        dailyVisitors: null // امسح بيانات اليومية للزوار (اختياري)
+      };
+      db.ref().update(updates).then(() => {
+        loadCounters();
+        loadChart(parseInt(document.getElementById('timeRangeSelect').value, 10));
+      });
+    }
+  });
+
+  document.getElementById('resetSocial').addEventListener('click', () => {
+    if (confirm('هل تريد إعادة عدادات السوشيال كلها؟')) {
+      const updates = {};
+      counters.slice(1).forEach(counter => {
+        updates['clicks/' + counter] = 0;
+        updates['lastUpdated/' + counter] = Date.now();
+      });
+      updates['dailyClicks'] = null; // امسح بيانات اليومية للسوشيال (اختياري)
+      db.ref().update(updates).then(() => {
+        loadCounters();
+        loadChart(parseInt(document.getElementById('timeRangeSelect').value, 10));
+      });
+    }
+  });
+
+  document.getElementById('timeRangeSelect').addEventListener('change', (e) => {
+    const days = parseInt(e.target.value, 10);
+    loadChart(days);
+  });
+
+  // تحميل أولي
+  loadCounters();
+  loadChart(30);
+
+  // زر تحميل Excel (CSV)
+  document.getElementById('downloadExcelBtn').addEventListener('click', () => {
+    db.ref().once('value').then(snapshot => {
+      const data = snapshot.val() || {};
+      const visitorCount = data.visitorCount || 0;
+      const clicks = data.clicks || {};
+      const dailyVisitors = data.dailyVisitors || {};
+      const dailyClicks = data.dailyClicks || {};
+
+      let csvContent = "العداد,القيمة\n";
+      csvContent += `الزوار,${visitorCount}\n`;
+      for(let social of counters.slice(1)) {
+        csvContent += `${social},${clicks[social] || 0}\n`;
+      }
+
+      csvContent += "\nتاريخ,زيارات الصفحة الرئيسية\n";
+      const sortedDates = Object.keys(dailyVisitors).sort();
+      for(let date of sortedDates) {
+        csvContent += `${date},${dailyVisitors[date]}\n`;
+      }
+
+      csvContent += "\nتاريخ,واتساب,إنستجرام,سناب شات,تيك توك\n";
+      // جمع كل التواريخ اليومية للسوشيال في جدول واحد
+      let allSocialDatesSet = new Set();
+      for(let soc of counters.slice(1)) {
+        if(dailyClicks[soc]) Object.keys(dailyClicks[soc]).forEach(d => allSocialDatesSet.add(d));
+      }
+      const allSocialDates = Array.from(allSocialDatesSet).sort();
+      for(let date of allSocialDates) {
+        csvContent += `${date},` +
+          `${(dailyClicks.whatsapp?.[date]||0)},` +
+          `${(dailyClicks.instagram?.[date]||0)},` +
+          `${(dailyClicks.snapchat?.[date]||0)},` +
+          `${(dailyClicks.tiktok?.[date]||0)}\n`;
+      }
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'visitor_data.csv';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  });
+</script>
 </body>
 </html>
