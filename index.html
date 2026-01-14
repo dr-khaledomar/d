@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>  د/ خالد عمر</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+  <button id="scrollToTopBtn" title="ارجع للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <header class="main-header">
+<div class="rebrand-box">
+
+  <p class="title">تم تغيير اسم المجمع من</p>
+
+  <!-- المكان القديم (نفس الكود بالظبط) -->
+  <div class="old-brand">
+    <img src="logo.png" alt="شعار المجمع" class="logo" />
+    <h1 >مجمع تاج الطفولة الطبي العام</h1>
+  </div>
+
+  <p class="title now">الى</p>
+
+  <!-- المكان الجديد -->
+  <div class="new-brand">
+    <img src="new-logo.png" alt="اللوجو الجديد" class="logoo" />
+    <h1 class="new-logo">مجمع وايت مون كير الطبي العام</h1>
+  </div>
+
+</div>
+
+  </header>
+
+  <main  class="content">
+    <section  class="doctor-info text" style="margin-top:150px; padding-top: 70px  
+    ; @media (max-width: 500px) {
+      margin-top:170px; 
+      padding-top: 100px ;
+      
+    }">
+          <div class="doctor-photo" style="@media (max-width: 500px) {width: 150px; height: 150px;  top: 160px;
+}  width: 175px;
+          margin-bottom: 10px;
+  height: 175px;
+  border-radius: 50%; /* يجعلها دائرية */
+  overflow: hidden;
+  border: 5px solid #0b3964a7; /* إطار الدائرة */
+  position: absolute;
+  top: 460px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;">
+      <img  src="03.png" style=" width: 175px;height: 175px; " alt="د/ خالد عمر">
+    </div>
+      <div class="content">
+        <h1 class="my-name">د/ خالد عمر
+          <div class="aurora">
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+          </div>
+        </h1>
+      </div>
+      <h4 class="job">أخصائي طب الأطفال و حديثي الولادة </h4>
+    </section>
+    <div class="social-icons">
+      <a href="https://www.tiktok.com/@dr.khaled.omar1" onclick="trackClick('tiktok')" target="_blank" rel="noopener noreferrer" >
+        <img src="tiktok.jpg" alt="tiktok" class="social-icon">
+      </a>
+
+      <a href="https://wa.me/+966538770001/?text=*السلام عليكم*  أنا والد الطفل: عمره: سنة و شهر. اريد الإستفسار عن شيء" onclick="trackClick('whatsapp')" target="_blank" rel="noopener noreferrer">
+        <img src="whatsapp.jpg" alt="whatsapp" class="social-icon">
+      </a>
+
+      <a href="https://www.instagram.com/dr.khaled.omar/" onclick="trackClick('instagram')" target="_blank" rel="noopener noreferrer">
+        <img src="instagram.jpg" alt="instagram" class="social-icon">
+      </a>
+
+      <a href="https://www.snapchat.com/add/khaledomar" onclick="trackClick('snapchat')" target="_blank" rel="noopener noreferrer">
+        <img src="snapchat.jpg" alt="snapchat" class="social-icon">
+      </a>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+      // إعداد Firebase (انسخ بياناتك هنا من مشروعك)
+      const firebaseConfig = {
+        apiKey: "AIzaSyAci1p0uVxkZI8K3UIxsmRXDXIRsdXNct8",
+        authDomain: "visitor-counter-5c400.firebaseapp.com",
+        databaseURL: "https://visitor-counter-5c400-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "visitor-counter-5c400",
+        storageBucket: "visitor-counter-5c400.firebasestorage.app",
+        messagingSenderId: "884458096546",
+        appId: "1:884458096546:web:3f5444a1753898aab954fb",
+        measurementId: "G-E0CBN6EHSG"
+      };
+
+      // تهيئة Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      // دالة تتبع الضغطات
+      function trackClick(platform) {
+        const ref = db.ref('clicks/' + platform);
+        ref.transaction(current => (current || 0) + 1);
+      }
+    </script>
+
+    <div class="working-hours">
+      <p><strong>مواعيد العمل</strong><br>من السبت إلى الخميس<br>من 1:30 ظهراً إلى 9:30 مساءً<br>ماعدا الجمعة أجازة</p>
+    </div>
+    <section class="doctor-info text">
+      <button class="button">
+        <span class="button__text">
+          <a href="https://g.page/r/CRrxkAg-yHDjEBM/review" target="_blank" class="location">تَقيمًكم يُسعِدنا</a>
+        </span>
+      </button>
+
+    <h4 class="job">العنوان:<br>
+      مجمع تاج الطفولة الطبي<br>
+      الطائف - حي السداد<br>
+      شارع الســتين طريق الشَفَــــا<br>
+      بجوار مطعم طازه
+    </h4>
+    <button class="button">
+      <span class="button__text">
+        <a href="https://maps.app.goo.gl/gY7iVrafZeKq6zS9A" target="_blank" class="location"> الموقع على جوجل ماب</a>
+      </span>
+    </button>
+    </section>
+
+
+    <section class="services text">
+      <h2 class="our-ser ul">خَدَماتِنا</h2>
+      <ul class="ul">
+        <h4 class="service ser-hov"> خدمة الفحص الشامل</h4>
+        <h4 class="service ser-hov">متابعة وتقييم النمــو و التطور من عمر يوم حتى البلوغ</h4>
+        <h4 class="service ser-hov">فحص ما قبل الـــدراسة</h4>
+        <h4 class="service ser-hov">متابعة الأمراض المزمنة مثل الحساسية</h4>
+        <h4 class="service ser-hov">علاج الأمراض الحادة والمزمنة</h4>
+        <h4 class="service ser-hov">علاج الأمراض المعدية عند الاطفال</h4>
+        <h4 class="service ser-hov">متابعة نقص الوزن والطول</h4>
+        <h4 class="service ser-hov">تشخيص وعلاج أمراض الطفولة</h4>
+        <h4 class="service ser-hov">رعاية الأطفال حديثى الولادة والرضع</h4>
+        <h4 class="service ser-hov">الأستشارة الغذائية والنظام الغذائى للأطفال</h4>
+        <h4 class="service ser-hov">إستشارات الرضاعة الطبيعيه</h4>
+
+      </ul>
+    </section>
+    <section class="faq text">
+      <h2 class="our-ser">الأسئلة الشائعة</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">🕒 ما هي مواعيد العمل؟
+          <span class="arrow">&#9660;</span>
+        </button>
+        <div class="faq-answer">
+          <p>من السبت إلى الخميس، من الساعة 1:30 ظهرًا حتى 9:30 مساءً.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">🩺 متى أراجع الطبيب؟
+          <span class="arrow">&#9660;</span>
+        </button>
+        <div class="faq-answer">
+          <p>عند ملاحظة أي أعراض غير معتادة، مثل الحمى المتكررة أو تأخر في النمو أو تغيرات في سلوك الطفل.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">📅 هل هناك حجز مسبق؟
+          <span class="arrow">&#9660;</span>
+        </button>
+        <div class="faq-answer">
+          <p>لا تحتاج إلى حجز مسبق، نرحب بك في أي وقت.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">🛡️ هل تقبلون تأمين صحي؟
+          <span class="arrow">&#9660;</span>
+        </button>
+        <div class="faq-answer">
+          <p>لا يتم قبول التأمين، ولكن نحرص على تقديم أفضل رعاية بأسعار مناسبة.</p>
+        </div>
+      </div>
+    </section>
+
+  
+<section class="testimonials">
+  <h2 class="testimonial-heading">آراء مرضانا</h2>
+  <p class="testimonial-intro">
+    نعتز بثقة مرضانا الغالية، وهذه نماذج من تجاربهم الإيجابية مع الرعاية الطبية المتخصصة التي يقدمها مجمع تاج الطفولة <br> عيادة الاطفال <br>د/ خالد عمر.
+  </p>
+  <div class="testimonial-gallery">
+    <!-- أول 3 تعليقات تظهر مباشرة -->
+    <div class="testimonial-card">
+      <a href="https://maps.app.goo.gl/mDHgCxNbZYAmPJw49" target="_blank">
+        <img src="com1.png" loading="lazy" alt="تعليق مريض 1">
+      </a>
+    </div>
+
+    <div class="testimonial-card">
+      <a href="https://maps.app.goo.gl/a5JZh2CSZZbYwBicA" target="_blank">
+        <img src="com2.png" loading="lazy" alt="تعليق مريض 2">
+        
+      </a>
+    </div>
+
+    <div class="testimonial-card">
+      <a href="https://maps.app.goo.gl/zoCocG1xmKqyVZPv7" target="_blank">
+        <img src="com3.png" loading="lazy" alt="تعليق مريض 3">
+      </a>
+    </div>
+
+    <!-- تعليقات مخفية بالبداية -->
+    <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/tXJ1YHTnwutVM5Rn7" target="_blank">
+        <img src="com4.png" loading="lazy" alt="تعليق مريض 4">
+      </a>
+    </div>
+
+    <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/tyPRh2hgRrq78Yw69" target="_blank">
+        <img src="com5.png" loading="lazy" alt="تعليق مريض 5"> 
+      </a>
+    </div>
+
+    <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/CN8Uq7ZUGJ9vz3Xg8" target="_blank">
+        <img src="com6.png" loading="lazy" alt="تعليق مريض 6">
+      </a>
+    </div>
+
+    <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/gYJsEgYsCBwLJPSW7" target="_blank">
+        <img src="com7.png" loading="lazy" alt="تعليق مريض 7">
+      </a>
+    </div>
+        <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/UApRhkFDdbywcXaV9" target="_blank">
+        <img src="com8.png" loading="lazy" alt="تعليق مريض 8">
+      </a>
+    </div>
+        <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/19rzf1nfirgSvmLn8" target="_blank">
+        <img src="com9.png" loading="lazy" alt="تعليق مريض 9">
+      </a>
+    </div>
+        <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/XfiatGJtDqRzreec9" target="_blank">
+        <img src="com10.png" loading="lazy" alt="تعليق مريض 10">
+      </a>
+    </div>
+        <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/GfdVjRofT9GvfCGa9" target="_blank">
+        <img src="com11.png" loading="lazy" alt="تعليق مريض 11">
+      </a>
+    </div>
+
+        <div class="testimonial-card more-comments" style="display: none;">
+      <a href="https://maps.app.goo.gl/k8Y1fM56q7jLbXEM9" target="_blank">
+        <img src="com12.png" loading="lazy" alt="تعليق مريض 12">
+      </a>
+    </div>
+
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button class="see-more" id="showMoreBtn" style="
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    ">
+     <i class="fa-solid fa-arrow-up"></i> المزيد من التعليقات
+    </button>
+  </div>
+</section>
+
+  </main>
+</body>
+</html>
+
+<footer>
+  <p style="  cursor: default !important;
+">&#169;  جميع الحقوق محفوظه لدي د/       <button class="admin" id="adminBtn" 
+        style="
+          color: black;
+          background-color: transparent;
+          border: none;
+          font-size: 16px;
+          font-family:'Tajawal', sans-serif;
+          padding: 0 1px;
+          cursor: default;
+        ">
+  خالد
+</button> عمر</p>
+</footer>
+<script src="script.js" type="module"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // إعدادات Firebase الخاصة بك
+  const firebaseConfig = {
+    apiKey: "AIzaSyAci1p0uVxkZI8K3UIxsmRXDXIRsdXNct8",
+    authDomain: "visitor-counter-5c400.firebaseapp.com",
+    databaseURL: "https://visitor-counter-5c400-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "visitor-counter-5c400",
+    storageBucket: "visitor-counter-5c400.firebasestorage.app",
+    messagingSenderId: "884458096546",
+    appId: "1:884458096546:web:3f5444a1753898aab954fb",
+    measurementId: "G-E0CBN6EHSG"
+  };
+
+  // تهيئة Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const database = firebase.database();
+  const visitorCountRef = database.ref('visitorCount');
+
+  // زيادة العداد بطريقة آمنة
+  visitorCountRef.transaction(currentCount => {
+    return (currentCount || 0) + 1;
+  }, (error, committed, snapshot) => {
+    if (error) {
+      console.error('خطأ في تحديث العداد:', error);
+    } else if (committed) {
+      document.getElementById('visitorCount').innerText = 'عدد الزوار: ' + snapshot.val();
+    }
+  });
+
+  // تحديث العداد عند تغييره في القاعدة
+  visitorCountRef.on('value', snapshot => {
+    document.getElementById('visitorCount').innerText = 'عدد الزوار: ' + snapshot.val();
+  });
+</script>
+
+</body>
+</html>
