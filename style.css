@@ -14,10 +14,23 @@ body {
   direction: rtl;
   text-align: center;
 }
+.new-logo{
+color: #ae955b;
+
+}
 
 .a{
 
 text-decoration: none !important;
+}
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+.title.now {
+  margin-bottom: 20px;
 }
 
 .text{
@@ -32,9 +45,13 @@ text-decoration: none !important;
 }
 
 .logo {
-  width: 120px;
+  width: 390px;
   height: auto;
   margin-bottom: -10px;
+}
+
+.logoo{
+  width: 120px;
 }
 
 h1 {
@@ -564,3 +581,42 @@ background-color: #0056b3 !important;
   transform: scale(1);
 }
 
+.doctor-info{
+  margin-top:150px; padding-top: 70px 
+    
+;
+}
+.dr-img{
+ width: 200px;
+ height: 200px; 
+}
+
+.doctor-photo{
+  height: 200px;
+  width: 200px;
+  border-radius: 50%; /* يجعلها دائرية */
+  overflow: hidden;
+  border: 5px solid #0b3964a7; /* إطار الدائرة */
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  margin-bottom: 10px;
+}
+@media (max-width: 850px) {
+  .doctor-photo{
+    width: 150px; 
+    height: 150px;
+    top: 170px;
+  
+  }
+  .doctor-info{
+           /*margin-top:170px;*/
+     /* padding-top: 100px */
+  }
+  .dr-img{
+ width: 150px;
+ height: 150px; 
+}
+}
