@@ -117,6 +117,22 @@ font-size: 50px;
   overflow: hidden;
 }
 
+.social-trigger {
+  background: white;
+  padding: 12px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  width: 69px;
+  height: 69px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
 .icons {
   margin: 7px;
   margin-top: 10px !important;
@@ -132,10 +148,248 @@ font-size: 50px;
   -o-transform: rotate(-10deg) scale(1.2);
 }
 
+.social-trigger:hover {
+  transform: rotate(-10deg) scale(1.2);
+  transition: all 0.3s ease;
+}
+
 
 .social-icon{
   width: 45px;
   height: 45px;
+}
+
+.whatsapp-form-wrapper[hidden] {
+  display: none !important;
+}
+
+.whatsapp-form-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(10, 23, 43, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+}
+
+.whatsapp-form {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(100%, 520px);
+  position: relative;
+}
+
+.whatsapp-form h3 {
+  margin: 0;
+  color: #0b1c9b;
+  padding-top: 6px;
+}
+
+.form-intro {
+  margin: 0;
+  color: #5a6780;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.whatsapp-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #eef3fb;
+  color: #17345f;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.whatsapp-close:hover {
+  background: #dfe9f8;
+}
+
+.whatsapp-form input,
+.whatsapp-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d8deea;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  background: #f9fbff;
+}
+
+.field-label {
+  display: block;
+  text-align: right;
+  font-weight: 700;
+  color: #17345f;
+  margin-bottom: -4px;
+}
+
+.age-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.whatsapp-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.whatsapp-form input:focus,
+.whatsapp-form textarea:focus {
+  outline: none;
+  border-color: #25d366;
+  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.15);
+}
+
+.whatsapp-submit {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #25d366, #128c4a);
+  color: #ffffff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.whatsapp-submit:hover {
+  filter: brightness(1.05);
+}
+
+.urgent-care,
+.map-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+.urgent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.urgent-card {
+  background: linear-gradient(135deg, #fff7f7, #ffe4e4);
+  border: 1px solid #ffd2d2;
+  border-radius: 14px;
+  padding: 18px 16px;
+  font-weight: 700;
+  color: #8a1f1f;
+  box-shadow: 0 8px 18px rgba(138, 31, 31, 0.08);
+}
+
+.map-card {
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  margin-top: 18px;
+}
+
+.map-card iframe {
+  width: 100%;
+  height: 360px;
+  border: 0;
+  display: block;
+}
+
+.mobile-contact-bar {
+  position: fixed;
+  right: 16px;
+  left: 16px;
+  bottom: 16px;
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  z-index: 1500;
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-contact-bar.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobile-contact-link {
+  border: none;
+  border-radius: 16px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+}
+
+.mobile-contact-link i {
+  font-size: 18px;
+}
+
+.call-link {
+  background: linear-gradient(135deg, #1570ef, #0b57d0);
+}
+
+.whatsapp-link {
+  background: linear-gradient(135deg, #25d366, #128c4a);
+  cursor: pointer;
+}
+
+.map-link {
+  background: linear-gradient(135deg, #ff8a00, #d96b00);
+}
+
+@media (max-width: 640px) {
+  .age-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-contact-bar {
+    display: grid;
+  }
+
+  body {
+    padding-bottom: 92px;
+  }
+
+  .map-card iframe {
+    height: 300px;
+  }
+
+  #scrollToTopBtn {
+    transition: background-color 0.3s ease, bottom 0.25s ease;
+  }
 }
 
 
@@ -259,9 +513,9 @@ font-size: 50px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   margin: 20px auto;
 
-  /* مثل .services و .doctor-info */
+  /* Ù…Ø«Ù„ .services Ùˆ .doctor-info */
 
-  /* تنسيق داخلي */
+  /* ØªÙ†Ø³ÙŠÙ‚ Ø¯Ø§Ø®Ù„ÙŠ */
   text-align: center;
 }
 .faq-item {
@@ -299,7 +553,7 @@ font-size: 50px;
   font-size: 1.3rem;
 }
 
-/* دوران السهم */
+/* Ø¯ÙˆØ±Ø§Ù† Ø§Ù„Ø³Ù‡Ù… */
 .faq-question.active .arrow {
   transform: translateY(-50%) rotate(180deg);
 }
@@ -492,7 +746,7 @@ color: #0077cc;
   bottom: 40px;
   right: 30px;
   z-index: 1000;
-  display: none; /* مخفي افتراضياً */
+  display: none; /* Ù…Ø®ÙÙŠ Ø§ÙØªØ±Ø§Ø¶ÙŠØ§Ù‹ */
   background-color: #007bff;
   color: white;
   border: none;
@@ -504,6 +758,10 @@ color: #0077cc;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: background-color 0.3s ease;
+}
+
+#scrollToTopBtn.with-mobile-bar {
+  bottom: 108px;
 }
 
 #scrollToTopBtn:hover {
@@ -519,7 +777,7 @@ color: #0077cc;
   color: #333;
 }
 
-/* على الشاشات الكبيرة (كمبيوتر) نعرض فقط 3 */
+/* Ø¹Ù„Ù‰ Ø§Ù„Ø´Ø§Ø´Ø§Øª Ø§Ù„ÙƒØ¨ÙŠØ±Ø© (ÙƒÙ…Ø¨ÙŠÙˆØªØ±) Ù†Ø¹Ø±Ø¶ ÙÙ‚Ø· 3 */
 @media (min-width: 768px) {
   .testimonial-card {
     display: none;
@@ -545,7 +803,7 @@ color: #0077cc;
   justify-items: center;
 }
 
-/* في الكمبيوتر: 3 أعمدة */
+/* ÙÙŠ Ø§Ù„ÙƒÙ…Ø¨ÙŠÙˆØªØ±: 3 Ø£Ø¹Ù…Ø¯Ø© */
 @media (min-width: 992px) {
   .testimonial-gallery {
     grid-template-columns: repeat(3, 1fr);
@@ -567,7 +825,7 @@ color: #0077cc;
 background-color: #0056b3 !important;
 }
 
-/* التأثير الأولي */
+/* Ø§Ù„ØªØ£Ø«ÙŠØ± Ø§Ù„Ø£ÙˆÙ„ÙŠ */
 .testimonial-intro {
   opacity: 0;
   transform: scale(0.8);
@@ -580,42 +838,42 @@ background-color: #0056b3 !important;
   transform: scale(1);
 }
 
-.doctor-info{
-  margin-top:150px; padding-top: 70px 
-    
-;
+.hero-doctor-info{
+  position: relative;
+  margin-top: 130px;
+  padding-top: 120px;
 }
+
 .dr-img{
- width: 200px;
- height: 200px; 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .doctor-photo{
-  height: 200px;
   width: 200px;
-  border-radius: 50%; /* يجعلها دائرية */
+  height: 200px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #0b3964a7; /* إطار الدائرة */
+  border: 5px solid #0b3964a7;
   position: absolute;
-  top: 180px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background-color: white;
-  margin-bottom: 10px;
 }
+
 @media (max-width: 850px) {
+  .hero-doctor-info{
+    margin-top: 110px;
+    padding-top: 95px;
+  }
+
   .doctor-photo{
-    width: 150px; 
+    width: 150px;
     height: 150px;
-    top: 170px;
-  
   }
-  .doctor-info{
-           /*margin-top:170px;*/
-     /* padding-top: 100px */
-  }
-  .dr-img{
- width: 150px;
- height: 150px; 
 }
 }
+
